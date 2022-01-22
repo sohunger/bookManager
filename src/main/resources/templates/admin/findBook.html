@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/layui-v2.6.8/layui/css/layui.css" >
+    <script src="/layui-v2.6.8/layui/layui.js"></script>
+
+</head>
+<body>
+<div class="layui-layout-admin">
+    <div th:replace="commons/common::adminsidebar"></div>
+    <div th:replace="commons/common::admintopbar"></div>
+    <div class="layui-body">
+        <div style="padding: 15px">
+            <form action="adminFindBookPage" class="layui-form">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">请选择书本种类</label>
+                    <div class="layui-inline">
+                        <select name="bookCategory" lay-search>
+                            <option value="1">小说</option>
+                            <option value="2">历史</option>
+                            <option value="3">计算机</option>
+                            <option value="4">哲学</option>
+                            <option value="5">社会科学</option>
+                            <option value="6">政治法律</option>
+                            <option value="7">军事科学</option>
+                            <option value="8">中国文学</option>
+                            <option value="9">外国文学</option>
+                            <option value="10">外国传记</option>
+                            <option value="11">英语</option>
+                            <option value="12">俄国小说</option>
+                            <option value="13">心理学</option>
+                            <option value="14">言情小说</option>
+                            <option value="15">武侠小说</option>
+                            <option value="16">环境科学</option>
+                            <option value="17">纪实文学</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="layui-btn layui-btn-normal">查询</button>
+            </form>
+            <table class="layui-table">
+                <colgroup>
+                    <col width="150">
+                    <col width="200">
+                    <col>
+                </colgroup>
+                <thead>
+                <tr>
+                    <td>编号</td>
+                    <td>书名</td>
+                    <td>作者</td>
+                    <td>出版社</td>
+                    <td>种类</td>
+                    <td>价格</td>
+                    <td>简介</td>
+                    <td>操作</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="book:${books}">
+                    <td th:text="${book.getBookId()}"></td>
+                    <td th:text="${book.getBookName()}"></td>
+                    <td th:text="${book.getBookAuthor()}"></td>
+                    <td th:text="${book.getBookPublish()}"></td>
+                    <td th:text="${book.getBookCategory()}"></td>
+                    <td th:text="${book.getBookPrice()}"></td>
+                    <td th:text="${book.getBookIntroduction()}"></td>
+                    <td>
+                        <button name="bookId" th:value="${book.getBookId()}" class="layui-btn layui-btn-normal del_btn" >删除</button>
+                    </td>
+                </tr>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</div>
+<script src="/static/script/admin/findBook.js"></script>
+<script src="/static/script/jquery.min.js"></script>
+</body>
+</html>

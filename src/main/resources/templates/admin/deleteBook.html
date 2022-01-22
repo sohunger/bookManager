@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>删除书籍</title>
+    <link rel="stylesheet" href="/layui-v2.6.8/layui/css/layui.css">
+    <script src="/layui-v2.6.8/layui/layui.js"></script>
+</head>
+<body>
+<div class="layui-layout-admin">
+    <div th:replace="commons/common::adminsidebar"></div>
+    <div th:replace="commons/common::admintopbar"></div>
+    <div class="layui-body">
+        <div style="padding: 15px">
+            <form action="/adminDeleteBookPage" class="layui-form">
+                <div class="layui-form-item">
+                    <label class="layui-form-label" >请输入书籍编号：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="bookId" class="layui-input">
+                    </div>
+                    <button class="layui-btn layui-btn-normal">删除</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+
+
+</div>
+</body>
+</html>

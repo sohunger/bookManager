@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>学生借书页面</title>
+    <link rel="stylesheet" href="/layui-v2.6.8/layui/css/layui.css" >
+    <script src="/layui-v2.6.8/layui/layui.js"></script>
+</head>
+<body>
+<div class="layui-layout-admin">
+    <div th:insert="~{commons/common::usersidebar}"/>
+    <div th:insert="~{commons/common::usertopbar}"/>
+    <div class="layui-body" >
+        <div style="padding: 15px">
+            <form action="/userBorrowing" class="layui-form">
+                <label class="layui-form-label" style="width: 113px">请输入书籍编号：</label>
+                <div class="layui-inline" >
+                    <input type="text" name="bookId" placeholder="书籍编号" class="layui-input">
+                </div>
+                <button class="layui-btn layui-btn-normal">借阅</button>
+            </form>
+            <br>
+            <text th:text="${msg}" style="color: red"></text>
+            <div ></div>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

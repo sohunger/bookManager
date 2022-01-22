@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>修改信息</title>
+    <link rel="stylesheet" href="/layui-v2.6.8/layui/css/layui.css" >
+    <script src="/layui-v2.6.8/layui/layui.js"></script>
+</head>
+<body>
+<div class="layui-layout-admin">
+    <div th:replace="~{commons/common::usersidebar}"/>
+    <div th:replace="~{commons/common::usertopbar}"/>
+    <div class="layui-body" style="padding: 15px">
+        <form action="modifyInfoPage" class="layui-form">
+            <div class="layui-form-item">
+                <label class="layui-form-label"> 用户名:</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="userName" th:value="${session.user.getUserName()}" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label"> 密码:</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="userPwd" th:value="${session.user.getUserPwd()}" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label"> 邮箱:</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="userEmail" th:value="${session.user.getUserEmail()}" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-col-md4 layui-col-md-offset1">
+                <button class="layui-btn layui-btn-normal" >修改</button>
+            </div>
+
+        </form>
+<!--        <span th:text="${modifyRemind}"></span>-->
+    </div>
+</div>
+</body>
+</html>

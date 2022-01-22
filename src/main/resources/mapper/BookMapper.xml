@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huang.manager.mapper.BookMapper">
+    <resultMap id="BaseResultMap" type="com.huang.manager.pojo.Book">
+        <id column="book_id" jdbcType="INTEGER" property="bookId"/>
+        <result column="book_name" jdbcType="VARCHAR" property="bookName"/>
+        <result column="book_author" jdbcType="VARCHAR" property="bookAuthor"/>
+        <result column="book_publish" jdbcType="VARCHAR" property="bookPublish"/>
+        <result column="book_category" jdbcType="INTEGER" property="bookCategory"/>
+        <result column="book_price" jdbcType="DOUBLE" property="bookPrice"/>
+        <result column="book_introduction" jdbcType="VARCHAR" property="bookIntroduction"/>
+    </resultMap>
+<sql id="base">
+    book_id, book_name, book_author, book_publish, book_category, book_price, book_introduction
+</sql>
+    <select id="userSelectBook" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+            <include refid="base"/>
+        from
+            mylibrary.book
+        where
+            book_name like #{selectInfo};
+    </select>
+<select id="selectById" resultMap="BaseResultMap" parameterType="INTEGER">
+    select
+        <include refid="base"></include>
+    from
+        mylibrary.book
+    where
+        book_id = #{bookId}
+</select>
+    <insert id="addBook"  >
+        insert into
+            mylibrary.book(book_name, book_author, book_publish, book_category, book_price, book_introduction)
+        values
+               (#{bookName},#{bookAuthor},#{bookPublish},#{bookCategory},#{bookPrice},#{bookIntroduction})
+    </insert>
+    <delete id="deleteBook" parameterType="INTEGER">
+        delete from mylibrary.book where book_id = #{bookId};
+    </delete>
+    <select id="adminSelectBook" parameterType="INTEGER" resultMap="BaseResultMap">
+        select <include refid="base"></include> from mylibrary.book where book_category = #{bookCategory};
+    </select>
+
+</mapper>

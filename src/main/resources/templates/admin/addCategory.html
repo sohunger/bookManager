@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/layui-v2.6.8/layui/css/layui.css" >
+    <script src="/layui-v2.6.8/layui/layui.js"></script>
+</head>
+<body>
+<div class="layui-layout-admin">
+    <div th:replace="commons/common::adminsidebar"></div>
+    <div th:replace="commons/common::admintopbar"></div>
+    <div class="layui-body">
+        <div style="padding: 15px">
+            <form action="/addCategoryPage">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">类别编号：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="categoryId" class="layui-input"><br>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">类别名：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="categoryName" class="layui-input">
+                    </div>
+                </div>
+                <button class="layui-btn layui-btn-normal">提交</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

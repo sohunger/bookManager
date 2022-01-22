@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户借书记录</title>
+    <link rel="stylesheet" href="/layui-v2.6.8/layui/css/layui.css" >
+    <script src="/layui-v2.6.8/layui/layui.js"></script>
+</head>
+<body>
+<div class="layui-layout-admin">
+    <div th:replace="commons/common::admintopbar"></div>
+    <div th:replace="commons/common::adminsidebar"></div>
+    <div class="layui-body">
+        <div style="padding: 15px">
+            <table class="layui-table">
+                <colgroup>
+                    <col width="150">
+                    <col width="200">
+                    <col>
+                </colgroup>
+                <thead >
+                <tr >
+                    <th>用户名</th>
+                    <th>书名</th>
+                    <th>借书时间</th>
+                    <th>最晚还书时间</th>
+                </tr>
+                </thead>
+                <tbody >
+                <tr th:each="record:${records}">
+                    <th th:text="${record.get(1)}"></th>
+                    <th th:text="${record.get(2)}"></th>
+                    <th th:text="${record.get(3)}"></th>
+                    <th th:text="${record.get(4)}"></th>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

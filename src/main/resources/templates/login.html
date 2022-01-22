@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <link rel="stylesheet" href="/static/layui-v2.6.8/layui/css/layui.css" >
+    <script src="/static/layui-v2.6.8/layui/layui.js"></script>
+    <link rel="stylesheet" href="/static/css/signin.css">
+</head>
+<body >
+<div class="layui-row">
+    <div class="login">
+        <div class="logintext"><text>sign in</text></div>
+    <form action="/userLogin" method="post" class="layui-form" id="loginform">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label loginfont" >用户名:</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="username" class="layui-input" autocomplete="off" placeholder="请输入用户名">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label loginfont">密码:</label>
+            <div class="layui-input-inline">
+                <input type="password" name="password" class="layui-input" placeholder="请输入密码">
+            </div>
+        </div>
+            <button class="layui-btn layui-btn-normal" id="loginbtn">登录</button>
+
+            <a th:href="@{adminLogin}" class="layui-btn" id="adminbtn">管理员登录</a><br>
+
+        <span th:text="${msg}" style="color: red" ></span>
+    </form>
+</div>
+</div>
+
+
+</body>
+</html>

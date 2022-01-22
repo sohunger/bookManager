@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>查询书籍</title>
+    <link rel="stylesheet" href="/layui-v2.6.8/layui/css/layui.css" >
+    <script src="/layui-v2.6.8/layui/layui.js"></script>
+</head>
+<body >
+<div class="layui-layout-admin">
+    <div th:replace="commons/common::usertopbar">
+    </div>
+    <div th:replace="commons/common::usersidebar">
+    </div>
+    <div class="layui-body" >
+<!--        内容主体-->
+        <div style="padding: 15px">
+                <form action="/bookFindMessage" class="layui-form">
+                    <div class="layui-form-item">
+                        <label>请输入书籍名称：</label>
+                        <div class="layui-inline">
+                            <input type="text" name="selectInfo" class="layui-input">
+                        </div>
+                        <button class="layui-btn layui-btn-normal">查询</button>
+                    </div>
+                </form>
+            <div>
+                <table class="layui-table">
+                    <colgroup>
+                        <col width="150">
+                        <col width="200">
+                        <col>
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th>书籍id</th>
+                        <th>书籍名称</th>
+                        <th>书籍作者</th>
+                        <th>书籍出版社</th>
+                        <th>书籍状态</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="bookqr:${bookQrs}">
+                        <th th:text="${bookqr.getBookId()}"></th>
+                        <th th:text="${bookqr.getBookName()}"></th>
+                        <th th:text="${bookqr.getBookAuthor()}"></th>
+                        <th th:text="${bookqr.getBookPublish()}"></th>
+                        <th th:text="${bookqr.getIsExist()}" style="color: red"></th>
+                    </tr>
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</body>
+</html>

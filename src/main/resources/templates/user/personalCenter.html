@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>个人中心</title>
+    <link rel="stylesheet" href="/layui-v2.6.8/layui/css/layui.css" >
+    <script src="/layui-v2.6.8/layui/layui.js"></script>
+</head>
+<body>
+<div class="layui-layout-admin">
+    <div th:replace="commons/common::usersidebar"/>
+        <div th:replace="commons/common::usertopbar"/>
+        <!--显示用户名和邮箱-->
+        <div class="layui-body" style="padding: 15px">
+            <label class="layui-form-label">用户名:</label>
+            <text th:text="${session.user.getUserName()}" class="layui-text"></text>
+            <span>邮箱: </span><text th:text="${session.user.getUserEmail()}"></text>
+        </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huang.manager.mapper.BorrowingMapper">
+<resultMap id="resultMap" type="com.huang.manager.pojo.BorrowingBooks">
+    <id column="id" jdbcType="INTEGER" property="id"/>
+    <result column="user_id" jdbcType="INTEGER" property="userId"/>
+    <result column="book_id" jdbcType="INTEGER" property="bookId"/>
+    <result column="data" jdbcType="DATE" property="data"/>
+</resultMap>
+    <sql id="base">
+        id,user_id,book_id,`date`
+    </sql>
+<select id="selectBookBorrowing" resultMap="resultMap" parameterType="INTEGER">
+    select
+        <include refid="base"></include>
+    from
+        mylibrary.borrowingbooks
+    where book_id = #{bookId}
+</select>
+    <insert id="insert" parameterType="com.huang.manager.pojo.BorrowingBooks">
+        insert into mylibrary.borrowingbooks(id,user_id,book_id,`date`)
+        values (#{id},#{userId},#{bookId},#{date})
+    </insert>
+    <select id="selectAllRecord" parameterType="INTEGER" resultMap="resultMap">
+        select
+            <include refid="base"></include>
+        from
+            mylibrary.borrowingbooks
+        where user_id = #{userId}
+    </select>
+    <delete id="returnBook" parameterType="INTEGER">
+        delete from mylibrary.borrowingbooks where book_id = #{bookId}
+    </delete>
+    <select id="adminSelectRecord" resultMap="resultMap">
+        select <include refid="base"></include> from mylibrary.borrowingbooks;
+    </select>
+</mapper>

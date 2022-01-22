@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huang.manager.mapper.UserMapper">
+    <resultMap id="UserBaseMap" type="com.huang.manager.pojo.User">
+        <id column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+        <result column="user_pwd" jdbcType="VARCHAR" property="userPwd"/>
+        <result column="user_email" jdbcType="VARCHAR" property="userEmail"/>
+    </resultMap>
+    <sql id="base">
+        user_id,user_name,user_pwd,user_email
+    </sql>
+<select id="selectUser" resultMap="UserBaseMap" parameterType="java.lang.String">
+select * from mylibrary.user where user_name = #{userName};
+</select>
+
+    <select id="selectById" parameterType="INTEGER" resultMap="UserBaseMap">
+        select
+            <include refid="base"></include>
+        from
+            mylibrary.user
+        where
+            user_id = #{userId}
+    </select>
+    <update id="updateUser" >
+        update mylibrary.user
+        set user_name = #{userName},user_pwd = #{userPwd},user_email = #{userEmail}
+        where user_id = #{userId}
+    </update>
+</mapper>
