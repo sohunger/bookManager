@@ -1,5 +1,6 @@
 package com.huang.manager.service;
 
+import com.github.pagehelper.PageInfo;
 import com.huang.manager.pojo.Admin;
 import com.huang.manager.pojo.BookCategory;
 import com.huang.manager.pojo.User;
@@ -14,5 +15,6 @@ public interface AdminService {
     boolean addBookCategory(String categoryName);
 
     //管理员查询用户
-    List<User> adminSelectUser();
+    PageInfo<User> adminSelectUser(int pageNum, int pageSize);
+
 }

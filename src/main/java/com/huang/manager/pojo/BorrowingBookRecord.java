@@ -9,6 +9,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+//用户借书记录返回的实体类
 public class BorrowingBookRecord {
     private int bookId;
     private String bookName;

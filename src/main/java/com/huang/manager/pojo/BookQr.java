@@ -4,6 +4,7 @@ import lombok.Data;
 
 //书籍查询结果
 @Data
+//用户查询书籍时返回的信息实体类
 public class BookQr {
     private Integer bookId;  //书籍id
 

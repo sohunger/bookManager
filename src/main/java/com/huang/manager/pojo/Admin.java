@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+//管理员的实体类
 public class Admin {
     private Integer adminId;
 

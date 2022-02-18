@@ -1,5 +1,7 @@
 package com.huang.manager.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.huang.manager.mapper.AdminMapper;
 import com.huang.manager.pojo.Admin;
 import com.huang.manager.pojo.BookCategory;
@@ -36,7 +38,10 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<User> adminSelectUser(){
-        return adminMapper.adminSelectUser();
+    public PageInfo<User> adminSelectUser(int pageNum,int pageSize){
+        PageHelper.startPage(pageNum,pageSize);
+        List<User> users = adminMapper.adminSelectUser();
+        PageInfo<User> pageInfo = new PageInfo<>(users);
+        return pageInfo;
     }
 }

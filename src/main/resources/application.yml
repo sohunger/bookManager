@@ -12,3 +12,10 @@ mybatis:
   configuration:
     map-underscore-to-camel-case: true
 
+#    分页设置
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+

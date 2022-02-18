@@ -1,18 +1,17 @@
 package com.huang.manager.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.huang.manager.mapper.BookMapper;
 import com.huang.manager.mapper.BorrowingMapper;
 import com.huang.manager.mapper.UserMapper;
 import com.huang.manager.pojo.Book;
 import com.huang.manager.pojo.BorrowingBookRecord;
 import com.huang.manager.pojo.BorrowingBooks;
-import com.huang.manager.pojo.User;
+import com.huang.manager.pojo.vo.UserBorrowRecord;
 import com.huang.manager.service.BorrowingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
-
-import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -26,17 +25,13 @@ public class BorrowingServiceImpl implements BorrowingService {
     UserMapper userMapper;
 
     @Override
-    public List<BorrowingBookRecord> selectAllRecord(HttpServletRequest request) {
-        User user = (User)request.getSession().getAttribute("user");
-        if(user == null){
-            return null;
-        }
-        List<BorrowingBookRecord> records = new LinkedList<>(); //待返回的借阅记录列表
-        List<BorrowingBooks> list = borrowingMapper.selectAllRecord(user.getUserId()); //查询借阅记录
+    public PageInfo<BorrowingBookRecord> selectAllRecord(int pageNum, int pageSize,int userId) {
 
-        if(list == null){
-            return null;
-        }
+        List<BorrowingBookRecord> records = new LinkedList<>();
+        PageHelper.startPage(pageNum,pageSize);
+        List<BorrowingBooks> list = borrowingMapper.selectAllRecord(userId); //查询借阅记录
+        PageInfo<BorrowingBooks> pageInfo1 = new PageInfo<>(list);
+
         for (BorrowingBooks borrowbook : list) {
             Book book = bookMapper.selectById(borrowbook.getBookId());
             BorrowingBookRecord record = new BorrowingBookRecord();
@@ -55,14 +50,18 @@ public class BorrowingServiceImpl implements BorrowingService {
             record.setLastestReturnDate(formatter.format(date2));
             records.add(record);
         }
-        return records;
+        PageInfo<BorrowingBookRecord> pageInfo = new PageInfo<>(records);
+        pageInfo.setTotal(pageInfo1.getTotal());
+        return pageInfo;
     }
 
     @Override
-    public List<Map> adminSelectRecord() {
+    public PageInfo<UserBorrowRecord> adminSelectRecord(int pageNum, int pageSize) {
         //全部记录
+        PageHelper.startPage(pageNum,pageSize);
         List<BorrowingBooks> borrowingBooks = borrowingMapper.adminSelectRecord();
-        List<Map> recordMap = new LinkedList<>();
+        PageInfo<BorrowingBooks> pageInfo = new PageInfo<>(borrowingBooks);
+        List<UserBorrowRecord> records = new LinkedList<>();
 
         for (BorrowingBooks borrowingBook : borrowingBooks) {
             //转换时间
@@ -72,13 +71,20 @@ public class BorrowingServiceImpl implements BorrowingService {
             gregorianCalendar.add(gregorianCalendar.DATE,30);
             Date date2 = gregorianCalendar.getTime();
 
-            Map<Integer,String> userRecord = new HashMap<>();
-            userRecord.put(1,userMapper.selectById(borrowingBook.getUserId()).getUserName());
-            userRecord.put(2,bookMapper.selectById(borrowingBook.getBookId()).getBookName());
-            userRecord.put(3,simpleDateFormat.format(borrowingBook.getDate()));
-            userRecord.put(4,simpleDateFormat.format(date2));
-            recordMap.add(userRecord);
+//            Map<String,String> userRecord = new HashMap<>();
+//            userRecord.put("userName",userMapper.selectById(borrowingBook.getUserId()).getUserName());
+//            userRecord.put("bookName",bookMapper.selectById(borrowingBook.getBookId()).getBookName());
+//            userRecord.put("borrowTime",simpleDateFormat.format(borrowingBook.getDate()));
+//            userRecord.put("returnTime",simpleDateFormat.format(date2));
+            String userName = userMapper.selectById(borrowingBook.getUserId()).getUserName();
+            String bookName = bookMapper.selectById(borrowingBook.getBookId()).getBookName();
+            String borrowTime = simpleDateFormat.format(borrowingBook.getDate());
+            String returnTime = simpleDateFormat.format(date2);
+            UserBorrowRecord record = new UserBorrowRecord(userName, bookName, borrowTime, returnTime);
+            records.add(record);
         }
-        return recordMap;
+        PageInfo<UserBorrowRecord> pageInfo1 = new PageInfo<>(records);
+        pageInfo1.setTotal(pageInfo.getTotal());
+        return pageInfo1;
     }
 }

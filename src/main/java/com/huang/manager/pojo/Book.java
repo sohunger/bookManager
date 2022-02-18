@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+//书的实体类
 public class Book {
     private Integer bookId; //书编号
 

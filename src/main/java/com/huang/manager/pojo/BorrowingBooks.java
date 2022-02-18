@@ -9,6 +9,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+//用户借书实体类
 public class BorrowingBooks {
     private Integer id; //id
 

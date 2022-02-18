@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+//书籍类别实体类
 public class BookCategory {
     private Integer categoryId;
 

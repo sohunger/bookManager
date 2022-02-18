@@ -17,6 +17,7 @@ public class BookController {
     @Autowired
     BookService bookService;
 
+//    用户查找书籍
     @RequestMapping("/bookFindMessage")
     public String selectBookMessage(Model model,
                                     @Param("selectInfo") String selectInfo){
@@ -29,6 +30,7 @@ public class BookController {
         return "/user/findBook";
     }
 
+//    管理员添加书籍
     @RequestMapping("/adminAddBookPage")
     public String adminAddBookPage(@Param("bookName") String bookName,
                                @Param("bookAuthor") String bookAuthor,
@@ -36,12 +38,6 @@ public class BookController {
                                @Param("bookCategory") Integer bookCategory,
                                @Param("bookPrice") Double bookPrice,
                                @Param("bookIntroduction") String bookIntroduction){
-        System.out.println(bookName);
-        System.out.println(bookAuthor);
-        System.out.println(bookPublish);
-        System.out.println(bookCategory);
-        System.out.println(bookPrice);
-        System.out.println(bookIntroduction);
         bookService.adminAddBook(bookName,
                 bookAuthor,
                 bookPublish,
@@ -51,12 +47,14 @@ public class BookController {
         return "admin/index";
     }
 
+//    管理员删除书籍
     @RequestMapping("/adminDeleteBookPage")
     public String adminDeleteBookPage(@Param("bookId") int bookId){
         bookService.adminDeleteBook(bookId);
         return "admin/index";
     }
 
+//    管理员查找书籍
     @RequestMapping("/adminFindBookPage")
     public String adminFindBookPage(int bookCategory,
                                     Model model){

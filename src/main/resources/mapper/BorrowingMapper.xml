@@ -32,6 +32,12 @@
         delete from mylibrary.borrowingbooks where book_id = #{bookId}
     </delete>
     <select id="adminSelectRecord" resultMap="resultMap">
-        select <include refid="base"></include> from mylibrary.borrowingbooks;
+        select <include refid="base"></include> from mylibrary.borrowingbooks
+    </select>
+    <select id="userBorrowingNum" parameterType="INTEGER" resultType="INTEGER">
+        select count(*) from mylibrary.borrowingbooks where user_id = #{userId}
+    </select>
+    <select id="userSelectRecordPaging" resultMap="resultMap" parameterType="INTEGER">
+        select <include refid="base"></include> from mylibrary.borrowingbooks where user_id = #{userId}
     </select>
 </mapper>

@@ -5,44 +5,39 @@
     <title>学生借书记录</title>
     <link rel="stylesheet" href="/layui-v2.6.8/layui/css/layui.css" >
     <script src="/layui-v2.6.8/layui/layui.js"></script>
+    <script src="/jquery-1.12.4.js"></script>
 </head>
 <body>
 <div class="layui-layout-admin">
     <div th:replace="~{commons/common::usersidebar}"/>
     <div th:replace="~{commons/common::usertopbar}"/>
-    <div class="layui-body" style="padding: 15px">
-        <table class="layui-table">
-            <colgroup>
-                <col width="150">
-                <col width="200">
-                <col>
-            </colgroup>
-            <thead>
-            <tr>
-                <th>书籍id</th>
-                <th>书籍名称</th>
-                <th>借阅时间</th>
-                <th>最晚归还时间</th>
-                <th>操作</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="record:${records}" >
-                <th th:text="${record.getBookId()}"></th>
-                <th th:text="${record.getBookName()}"></th>
-                <th th:text="${record.getEarliestReturnDate()}"></th>
-                <th th:text="${record.getLastestReturnDate()}"></th>
-                <th>
-                    <form action="/returnBook" >
-                        <button name="bookId" th:value="${record.getBookId()}" class="layui-btn layui-btn-normal">还书</button>
-                    </form>
-
-                </th>
-            </tr>
-            </tbody>
-
+    <div class="layui-body" style="padding: 15px" >
+        <table class="layui-table" id="Paging">
         </table>
     </div>
 </div>
+<script type="text/javascript" th:inline="none">
+
+    layui.use(['table'],function(){
+        var table = layui.table;	//表格
+        table.render({
+            elem:'#Paging'	//表单ID
+            ,url:'/userBorrowRecordPageInfo'	//数据接口
+            ,page:{				//分页设置
+                limit:10,		//默认每一页显示数量
+                limits:[5,10,20,30,40,50]//可选择每页显示的数量
+            }
+            ,cols:[[//表格列
+                {field:'bookId',title:'书籍id',align:'center',sort:true }
+                ,{field:'bookName',title:'书籍名称',align:'center',sort:false },
+                {field:'earliestReturnDate',title:'借阅时间',align:'center',sort:false },
+                {field:'lastestReturnDate',title:'最晚归还时间',align:'center',sort:false }
+            ]],
+            done : function (res) {
+                console.log(res);
+            }
+        });
+    })
+</script>
 </body>
 </html>

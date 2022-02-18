@@ -1,21 +1,18 @@
 package com.huang.manager.controller;
 
-import com.huang.manager.pojo.BorrowingBookRecord;
+import com.github.pagehelper.PageInfo;
 import com.huang.manager.pojo.User;
 import com.huang.manager.service.BorrowingService;
-import com.huang.manager.service.UserService;
 import com.huang.manager.service.impl.UserServiceImpl;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.HttpRequestHandler;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.ServletRegistration;
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class UserController {
@@ -23,6 +20,7 @@ public class UserController {
     UserServiceImpl userService;
     @Autowired
     BorrowingService borrowingService;
+//    用户登录
     @PostMapping("/userLogin")
     public String userLogin(Model model,
                             @Param("username") String username,
@@ -37,14 +35,27 @@ public class UserController {
         return "user/index";
     }
 
-    @RequestMapping("/userBorrowRecordPage")
-    public String borrowRecordPage(HttpServletRequest request,
-                                   Model model){
-        List<BorrowingBookRecord> records = borrowingService.selectAllRecord(request);
-        model.addAttribute("records",records);
-        return "user/borrowingBookRecord";
+//    用户借书页面信息
+    @CrossOrigin(origins = "*")
+    @GetMapping("/userBorrowRecordPageInfo")
+    @ResponseBody
+    public Map borrowRecordPage(Integer limit ,
+                                Integer page,
+                                Model model,
+                                HttpServletRequest request){
+
+        User user = (User) request.getSession().getAttribute("user");
+        HashMap<String, Object> map = new HashMap<>();
+        PageInfo pageInfo = borrowingService.selectAllRecord(page,limit,user.getUserId());
+//        在map中插入需要的信息
+        map.put("code",0);
+        map.put("msg",1);
+        map.put("count",pageInfo.getTotal());
+        map.put("data",pageInfo.getList());
+        return map;
     }
 
+//    用户还书
     @RequestMapping("/returnBook")
     public String returnBook(Model model,
                              @Param("bookId") int bookId){
@@ -53,6 +64,7 @@ public class UserController {
         return "redirect:userBorrowRecordPage";
     }
 
+//    修改用户信息页面
     @RequestMapping("/modifyInfoPage")
     public String modifyInfoPage(HttpServletRequest request,
                                  @Param("userName") String userName,

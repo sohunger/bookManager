@@ -19,6 +19,6 @@
 </insert>
 <!--    管理员查询用户-->
     <select id="adminSelectUser" resultType="com.huang.manager.pojo.User">
-        select user_id, user_name, user_pwd, user_email from mylibrary.user;
+        select user_id, user_name, user_pwd, user_email from mylibrary.user
     </select>
 </mapper>
